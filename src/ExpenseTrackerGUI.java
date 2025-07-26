@@ -100,6 +100,9 @@ panel.add(categoryBox,g);
                 statusLabel.setText("⚠️ Error: " + ex.getMessage());
             }
         });
+JButton view = new JButton("View Expenses");
+view.addActionListener(e -> new ExpenseView());
+panel.add(view);
 
         // Finalize window
         add(panel);

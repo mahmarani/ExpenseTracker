@@ -65,4 +65,31 @@ public class ExpenseDAO {
         }
         return total;
     }
+    public List<Expense> getExpensesByCategory(String category) {
+        List<Expense> expenses = new ArrayList<>();
+        String sql = "SELECT * FROM expenses WHERE category = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, category);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Expense exp = new Expense(
+                        rs.getString("category"),
+                        rs.getDouble("amount"),
+                        rs.getString("description"),
+                        rs.getDate("date")
+                );
+                expenses.add(exp);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return expenses;
+    }
+
 }
